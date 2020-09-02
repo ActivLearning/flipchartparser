@@ -18,8 +18,6 @@ FlipChartController* pController ;
 
 extern  "C"
 {
-
-
     jstring JAVA(openFlipchart)(JNIEnv *env, jobject obj,
             jstring flipChartPath,
             jstring uncompressPath)
