@@ -116,15 +116,11 @@
 
 ### <a name="Transform"></a>Transform
 * id 对象id （int）
-- `-` property
-
-	propertyKey |Type| Description
-	------------|----|------------
-	angle|double| 旋转角度
-	inverted |bool|是否反转
-	reflected |bool|是否反射？
-	scaleFactor |Point|x y 缩放比列
-	translate |Point| 对象相对于bounding rect top（对应y） left（对应x） x y 轴需要偏移的距离
+* angle(double) 旋转角度
+* inverted (bool)是否反转
+* reflected (bool)是否反射？
+* scaleFactor (Pointx) y 缩放比列
+* translate (Point) 对象相对于bounding rect top（对应y） left（对应x） x y 轴需要偏移的距离
 
 * type 类型名 （string）
 
