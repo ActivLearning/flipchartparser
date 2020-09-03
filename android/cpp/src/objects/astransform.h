@@ -10,25 +10,24 @@
 //#include <QMatrix>
 
 class AsFactory;
+
 class AsOrigin;
+
 class AsRectF;
 
 /**
  * Represents a Transform property in a flipchart
  */
-class AsTransform : public AsObject
-{
-
+class AsTransform : public AsObject {
 
 
 public:
-    enum AsEnumProperty
-    {
+    enum AsEnumProperty {
         // From AsObject...
-                AS_PROPERTY_DATETIMECREATED = 1,
+        AS_PROPERTY_DATETIMECREATED = 1,
 
         // From AsTransform...
-                AS_PROPERTY_TRANSLATE,
+        AS_PROPERTY_TRANSLATE,
         AS_PROPERTY_ANGLE,
         AS_PROPERTY_SCALEFACTOR,
         AS_PROPERTY_REFLECTED,
@@ -36,35 +35,42 @@ public:
     };
 
     // Construction and destruction.
-    AsTransform( AsFactory * );
+    AsTransform(AsFactory *);
+
     AsTransform();
-    AsTransform( const AsTransform& );
+
+    AsTransform(const AsTransform &);
 
     virtual ~AsTransform();
 
-    void operator= ( const AsTransform& );
+    void operator=(const AsTransform &);
 
-    bool operator== ( const AsTransform& );
+    bool operator==(const AsTransform &);
 
-    void asCopy( const AsTransform& );
+    void asCopy(const AsTransform &);
 
     // Properties.
-    void asResetPropertyIndex( void );
+    void asResetPropertyIndex(void);
 
-    const QPointF& asGetTranslate( void ) const;
-    void asSetTranslate( const QPointF& );
+    const QPointF &asGetTranslate(void) const;
+
+    void asSetTranslate(const QPointF &);
 
     double asGetAngle() const;
+
     void asSetAngle(double dAngle);
 
-    const QPointF& asGetScaleFactor( void ) const;
-    void asSetScaleFactor( const QPointF& );
+    const QPointF &asGetScaleFactor(void) const;
 
-    bool asGetReflected( void ) const;
-    void asSetReflected( bool );
+    void asSetScaleFactor(const QPointF &);
 
-    bool asGetInverted( void ) const;
-    void asSetInverted( bool );
+    bool asGetReflected(void) const;
+
+    void asSetReflected(bool);
+
+    bool asGetInverted(void) const;
+
+    void asSetInverted(bool);
 
     QString typeName() override;
     // affine transformations
@@ -75,9 +81,12 @@ protected:
 
     int getPropertyIdByName(QString name) const override;
 
+public:
+    Json::Value &serialized() override;
+
 private:
     // Property hash table.
-    static QHash<QString, quint16>& m_lProperties( void );
+    static QHash<QString, quint16> &m_lProperties(void);
 
     // Properties.
     QPointF m_Translate;
@@ -89,14 +98,13 @@ private:
     // Computed.
 //    QMatrix m_Matrix;
 
-    void asResetTransformProps( void );
+    void asResetTransformProps(void);
 
     double asNormaliseAngle(double dAngle);
 
     static const double s_kMaxAngle;
     static const double s_kMinAngle;
 };
-
 
 
 #endif // ASTRANSFORM_H

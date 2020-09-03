@@ -2,36 +2,36 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 
-class Flipchartparser {
-  static const MethodChannel _channel = const MethodChannel('flipchartparser');
+const MethodChannel _channel = const MethodChannel('flipchartparser');
+Future<void> config(String tempPath, bool logEnabled) async {
+  await _channel.invokeMethod("config",
+      <String, dynamic>{'tempPath': tempPath, 'logEnabled': logEnabled});
+}
 
-  static Future<String> get platformVersion async {
+class FlipchartParser {
+  int _handle = -1;
+  Future<String> get platformVersion async {
     final String version = await _channel.invokeMethod('getPlatformVersion');
     return version;
   }
 
-  static Future<String> openFlipchart(
-      String flipchartPath, String uncompressPath) async {
-    final String result = await _channel.invokeMethod(
-        'openFlipchart', <String, dynamic>{
-      'flipchartPath': flipchartPath,
-      'uncompressPath': uncompressPath
-    });
+  Future<void> init() async {
+    if (_handle == -1) {
+      _handle = await _channel.invokeMethod("newInstance");
+    }
+  }
+
+  Future<String> openFlipchart(String flipchartPath) async {
+    await init();
+    final String result = await _channel.invokeMethod('openFlipchart',
+        <String, dynamic>{'handle': _handle, 'flipchartPath': flipchartPath});
     return result;
   }
 
-  static Future<String> loadPage(int pageNumber) async {
+  Future<String> loadPage(int pageNumber) async {
+    await init();
     final String result = await _channel.invokeMethod('loadPage',
-        <String, dynamic>{'pageNumber': pageNumber});
+        <String, dynamic>{'handle': _handle, 'pageNumber': pageNumber});
     return result;
   }
-
-  static Future clear() async{
-    await _channel.invokeMethod('clear');
-  }
-
-  static Future dispose() async{
-    await _channel.invokeMethod('dispose');
-  }
-
 }

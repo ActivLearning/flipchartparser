@@ -10,37 +10,32 @@ const double AsTransform::s_kMaxAngle = 360.0;
 const double AsTransform::s_kMinAngle = 0.0;
 
 
-AsTransform::AsTransform( AsFactory *pAsFactory ) : AsObject( pAsFactory )
-{
+AsTransform::AsTransform(AsFactory *pAsFactory) : AsObject(pAsFactory) {
     // Set the type property.
-    asSetType( AsObject::AS_OBJECT_TRANSFORM );
+    asSetType(AsObject::AS_OBJECT_TRANSFORM);
 
     // set defaults - identity matrix compatible
     this->asResetTransformProps();
 }
 
-AsTransform::AsTransform() : AsObject( 0 )
-{
+AsTransform::AsTransform() : AsObject(0) {
     // Set the type property.
-    asSetType( AsObject::AS_OBJECT_TRANSFORM );
+    asSetType(AsObject::AS_OBJECT_TRANSFORM);
 
     // set defaults - identity matrix compatible
     this->asResetTransformProps();
 }
 
-AsTransform::AsTransform( const AsTransform& transform ) : AsObject( transform )
-{
-    asCopy( transform );
+AsTransform::AsTransform(const AsTransform &transform) : AsObject(transform) {
+    asCopy(transform);
 }
 
-void AsTransform::operator= ( const AsTransform& transform )
-{
-    AsObject::operator = ( transform );
-    asCopy( transform );
+void AsTransform::operator=(const AsTransform &transform) {
+    AsObject::operator=(transform);
+    asCopy(transform);
 }
 
-void AsTransform::asCopy( const AsTransform& transform )
-{
+void AsTransform::asCopy(const AsTransform &transform) {
     m_Translate = transform.asGetTranslate();
     m_dAngle = transform.asGetAngle();
     m_ScaleFactor = transform.asGetScaleFactor();
@@ -48,56 +43,48 @@ void AsTransform::asCopy( const AsTransform& transform )
     m_bInverted = transform.asGetInverted();
 }
 
-bool AsTransform::operator== ( const AsTransform& transform )
-{
-    if (( m_Translate != transform.asGetTranslate() ) ||
-        ( m_dAngle != transform.asGetAngle() ) ||
-        ( m_ScaleFactor != transform.asGetScaleFactor() ) ||
-        ( m_bReflected != transform.asGetReflected() ) ||
-        ( m_bInverted != transform.asGetInverted() ))
-    {
+bool AsTransform::operator==(const AsTransform &transform) {
+    if ((m_Translate != transform.asGetTranslate()) ||
+        (m_dAngle != transform.asGetAngle()) ||
+        (m_ScaleFactor != transform.asGetScaleFactor()) ||
+        (m_bReflected != transform.asGetReflected()) ||
+        (m_bInverted != transform.asGetInverted())) {
         return false;
     }
     return true;
 }
 
-AsTransform::~AsTransform()
-{
+AsTransform::~AsTransform() {
 
 }
 
-QHash<QString, quint16>& AsTransform::m_lProperties( void )
-{
+QHash<QString, quint16> &AsTransform::m_lProperties(void) {
     static QHash<QString, quint16> HashProperties;
 
-    if ( HashProperties.isEmpty() )
-    {
+    if (HashProperties.isEmpty()) {
         // From AsObject...
-      //  HashProperties.insert( "asDateTimeCreated", ( quint16 )AsTransform::AS_PROPERTY_DATETIMECREATED );
+        //  HashProperties.insert( "asDateTimeCreated", ( quint16 )AsTransform::AS_PROPERTY_DATETIMECREATED );
 
         // From AsTransform...
-        HashProperties.insert( "translate", ( quint16 )AsTransform::AS_PROPERTY_TRANSLATE );
-        HashProperties.insert( "angle", ( quint16 )AsTransform::AS_PROPERTY_ANGLE );
-        HashProperties.insert( "scaleFactor", ( quint16 )AsTransform::AS_PROPERTY_SCALEFACTOR );
-        HashProperties.insert( "reflected", ( quint16 )AsTransform::AS_PROPERTY_REFLECTED );
-        HashProperties.insert( "inverted", ( quint16 )AsTransform::AS_PROPERTY_INVERTED );
+        HashProperties.insert("translate", (quint16) AsTransform::AS_PROPERTY_TRANSLATE);
+        HashProperties.insert("angle", (quint16) AsTransform::AS_PROPERTY_ANGLE);
+        HashProperties.insert("scaleFactor", (quint16) AsTransform::AS_PROPERTY_SCALEFACTOR);
+        HashProperties.insert("reflected", (quint16) AsTransform::AS_PROPERTY_REFLECTED);
+        HashProperties.insert("inverted", (quint16) AsTransform::AS_PROPERTY_INVERTED);
     }
 
     return HashProperties;
 }
 
-void AsTransform::asResetPropertyIndex( void )
-{
-    AsObject::asSetPropertyIterator( &m_lProperties );
+void AsTransform::asResetPropertyIndex(void) {
+    AsObject::asSetPropertyIterator(&m_lProperties);
 }
 
-const QPointF& AsTransform::asGetTranslate( void ) const
-{
+const QPointF &AsTransform::asGetTranslate(void) const {
     return m_Translate;
 }
 
-void AsTransform::asSetTranslate( const QPointF& translate )
-{
+void AsTransform::asSetTranslate(const QPointF &translate) {
     // Assert on NaN
     Q_ASSERT(translate.x() == translate.x());
     Q_ASSERT(translate.y() == translate.y());
@@ -105,57 +92,48 @@ void AsTransform::asSetTranslate( const QPointF& translate )
     m_Translate = translate;
 }
 
-double AsTransform::asGetAngle() const
-{
+double AsTransform::asGetAngle() const {
     return m_dAngle;
 }
 
-void AsTransform::asSetAngle(double dAngle)
-{
+void AsTransform::asSetAngle(double dAngle) {
     dAngle = asNormaliseAngle(dAngle);
 
     m_dAngle = dAngle;
 }
 
-const QPointF& AsTransform::asGetScaleFactor( void ) const
-{
+const QPointF &AsTransform::asGetScaleFactor(void) const {
     return m_ScaleFactor;
 }
 
-void AsTransform::asSetScaleFactor( const QPointF& scaleFactor )
-{
+void AsTransform::asSetScaleFactor(const QPointF &scaleFactor) {
     m_ScaleFactor = scaleFactor;
 }
 
-bool AsTransform::asGetReflected( void ) const
-{
+bool AsTransform::asGetReflected(void) const {
     return this->m_bReflected;
 }
 
-void AsTransform::asSetReflected( bool reflect )
-{
+void AsTransform::asSetReflected(bool reflect) {
     this->m_bReflected = reflect;
 }
 
-bool AsTransform::asGetInverted( void ) const
-{
+bool AsTransform::asGetInverted(void) const {
     return this->m_bInverted;
 }
 
-void AsTransform::asSetInverted( bool inverted )
-{
+void AsTransform::asSetInverted(bool inverted) {
     this->m_bInverted = inverted;
 }
 
-void AsTransform::asResetTransformProps( void )
-{
+void AsTransform::asResetTransformProps(void) {
     // The default values must result in an identity matrix...
     // Therefore, no translation...
-    m_Translate = QPointF( 0, 0 );
+    m_Translate = QPointF(0, 0);
     // No rotation...
     m_dAngle = 0;
     // Scale factor = 1...
-    m_ScaleFactor = QPointF( 1, 1 );
+    m_ScaleFactor = QPointF(1, 1);
     // ATE - Added 13/10/2005 Inverted and reflected set to false
     this->m_bReflected = this->m_bInverted = false;
 }
@@ -217,8 +195,7 @@ void AsTransform::asResetTransformProps( void )
 //    return m_Matrix;
 //}
 
-double AsTransform::asNormaliseAngle(double dAngle)
-{
+double AsTransform::asNormaliseAngle(double dAngle) {
     while (dAngle > s_kMaxAngle) dAngle -= s_kMaxAngle;
 
     while (dAngle < s_kMinAngle) dAngle += s_kMaxAngle;
@@ -226,17 +203,22 @@ double AsTransform::asNormaliseAngle(double dAngle)
     return dAngle;
 }
 
-QString AsTransform::getPropertyNameById(int nID)
-{
+QString AsTransform::getPropertyNameById(int nID) {
     return m_lProperties().key(AsEnumProperty(nID));
 }
 
-int AsTransform::getPropertyIdByName(QString name) const
-{
+int AsTransform::getPropertyIdByName(QString name) const {
     return m_lProperties().value(name);
 }
 
-QString AsTransform::typeName()
-{
+QString AsTransform::typeName() {
     return "transform";
+}
+
+Json::Value &AsTransform::serialized() {
+    Json::Value &serializedString = AsObject::serialized();
+    Json::Value property = serializedString.get("property", "");
+    serializedString.removeMember("property");
+    serializedString.append(property);
+    return AsObject::serialized();
 }

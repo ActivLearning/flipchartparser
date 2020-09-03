@@ -101,17 +101,17 @@ AsZip::~AsZip()
 }
 
 
-void AsZip::bindAsReportFile(function<void(const QString&, const QByteArray&)> func)
+void AsZip::bindAsReportFile(std::function<void(const QString&, const QByteArray&)> func)
 {
     asReportFile = func;
 }
 
 
-bool AsZip::asReportFiles( const char *filename )
+bool AsZip::asReportFiles( const std::string& filename )
 {
     // First, we must check that we can open the file for reading.
     bool noError = true;
-    QString sFlipChartFilename = filename;
+    QString sFlipChartFilename = QString::fromStdString( filename );
     asFormatFilename( sFlipChartFilename );
 
     QFile inFile( sFlipChartFilename );

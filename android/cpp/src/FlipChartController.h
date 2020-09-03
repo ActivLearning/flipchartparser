@@ -8,14 +8,14 @@
 #include <iostream>
 
 #include <QString>
-
+#include <string>
 
 class AsNode;
 class AsObject;
 class AsFactory;
 class AsFlipchart;
 class AsVirtualFolder;
-using namespace std;
+
 
 class FlipChartController
 {
@@ -25,9 +25,9 @@ public:
     ~FlipChartController();
 
 public:
-    string openFlipchart(const char* flipChartPath, const char* uncompressPath);
+    std::string openFlipchart(const std::string& flipChartPath, const std::string& uncompressPath);
 
-    string loadPage(const int pageNumber);
+    std::string loadPage(const int pageNumber);
     void dispose();
     void clear();
 private:

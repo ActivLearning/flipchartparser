@@ -20,18 +20,13 @@ public class FlipchartparserPlugin implements MethodCallHandler {
    * A native method that is implemented by the 'native-lib' native library,
    * which is packaged with this application.
    */
-  public native String stringFromJNI();
+  public native boolean config(String tempPath,boolean logEnabled);
+  public native String loadPage(int handle,int pageNumber);
+  public native int newInstance();
+  public native String openFlipchart(int handle,String flipchartPath);
 
-  public native String openFlipchart(String flipchartPath,String uncompressPath);
-
-  public native String loadPage(int pageNumber);
-
-  public native void clear();
-
-  public native void dispose();
 
   private static Activity mActivity;
-
   /** Plugin registration. */
   public static void registerWith(Registrar registrar) {
     final MethodChannel channel = new MethodChannel(registrar.messenger(), "flipchartparser");
@@ -44,14 +39,11 @@ public class FlipchartparserPlugin implements MethodCallHandler {
   @Override
   public void onMethodCall(final MethodCall call, final Result result) {
     if (call.method.equals("getPlatformVersion")) {
-//      String str = stringFromJNI();
-//      Log.i("###1",str);
-//      result.success("Android " + android.os.Build.VERSION.RELEASE);
+      result.success("Android " + android.os.Build.VERSION.RELEASE);
     } else if(call.method.equals("openFlipchart")){
-
       String flipchartPath = call.argument("flipchartPath");
-      String uncompressPath = call.argument("uncompressPath");
-      String str = openFlipchart(flipchartPath,uncompressPath);
+      int handle = call.argument("handle");
+      String str = openFlipchart(handle,flipchartPath);
       result.success(str);
     } else if(call.method.equals("loadPage")){
 //      new Thread(new Runnable() {
@@ -70,15 +62,23 @@ public class FlipchartparserPlugin implements MethodCallHandler {
 //        }
 //      }).start();
       int pageNumber = call.argument("pageNumber");
-      final String str = loadPage(pageNumber);
+      int handle = call.argument("handle");
+      final String str = loadPage(handle,pageNumber);
       result.success(str);
     } else if(call.method.equals("clear")){
-      clear();
       result.success(null);
     } else if(call.method.equals("dispose")){
-      dispose();
       result.success(null);
-    } else {
+    } else if(call.method.equals("config")){
+      String tempPath = call.argument("tempPath");
+      boolean logEnabled = call.argument("logEnabled");
+      boolean success = config(tempPath,logEnabled);
+      result.success(success);
+    }else if(call.method.equals("newInstance")){
+      int handle = newInstance();
+      result.success(handle);
+    }
+    else {
       result.notImplemented();
     }
   }

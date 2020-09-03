@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flipchartparser/flipchartparser.dart';
 
 void main() => runApp(MyApp());
 
@@ -25,7 +24,7 @@ class _MyAppState extends State<MyApp> {
     String platformVersion;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
-      platformVersion = await Flipchartparser.platformVersion;
+      //platformVersion = await Flipchartparser.platformVersion;
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }

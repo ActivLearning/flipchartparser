@@ -6,14 +6,12 @@
 #define FLIPCHARTQUICK_ASZIP_H
 
 #include <functional>
-#include <string>
-
-using namespace std;
-
-
 #include <QtGlobal>
 #include <QString>
+#include <string>
 
+
+using std::string;
 
 class AsZip {
 
@@ -24,7 +22,7 @@ public:
 public:
     void bindAsReportFile(std::function<void(const QString&, const QByteArray&)> func);
 
-    bool asReportFiles( const char* filename );
+    bool asReportFiles( const std::string& filename );
 
 
     enum ZipError
