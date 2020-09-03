@@ -54,7 +54,8 @@ class _MyAppState extends State<MyApp> {
           child: IconButton(
               icon: Icon(Icons.open_in_browser),
               onPressed: () async {
-                config(tempPath: Directory.systemTemp.path);
+                FlipchartParserGlobalconfig(
+                    tempPath: Directory.systemTemp.path);
                 File file = await FilePicker.getFile();
                 FlipchartParser parser = new FlipchartParser();
                 LogUtil.i(content: await parser.openFlipchart(file.path));
