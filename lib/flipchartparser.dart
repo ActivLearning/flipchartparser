@@ -10,6 +10,8 @@ Future<void> config({String tempPath, bool logEnabled = false}) async {
 
 class FlipchartParser {
   int _handle = -1;
+  String get filePath => _filePath;
+  String _filePath;
   Future<String> get platformVersion async {
     final String version = await _channel.invokeMethod('getPlatformVersion');
     return version;
@@ -23,6 +25,7 @@ class FlipchartParser {
 
   Future<String> openFlipchart(String flipchartPath) async {
     await init();
+    _filePath = flipchartPath;
     final String result = await _channel.invokeMethod('openFlipchart',
         <String, dynamic>{'handle': _handle, 'flipchartPath': flipchartPath});
     return result;

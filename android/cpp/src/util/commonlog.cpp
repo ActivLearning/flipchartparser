@@ -3,10 +3,12 @@
 #include <string.h>
 #include <stdarg.h>
 #include <iostream>
-
+bool gLogEnabled;
 void logDebugStr(const char* file, int line, const char* format, ...) {
 
-
+    if(!gLogEnabled){
+        return ;
+    }
     va_list vl;
     char buf[1000000]{0};
     va_start(vl, format);

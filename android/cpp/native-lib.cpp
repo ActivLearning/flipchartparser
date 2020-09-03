@@ -30,6 +30,7 @@ jboolean JAVA(config)(JNIEnv *env, jobject obj, jstring tempPath, jboolean logEn
         m_pFlipchartManager = new FlipChartManager;
     }
     m_pFlipchartManager->setTempDir(tempPathCopy);
+    gLogEnabled = logEnabled;
     return true;
 }
 
