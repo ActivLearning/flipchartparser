@@ -217,8 +217,27 @@ QString AsTransform::typeName() {
 
 Json::Value &AsTransform::serialized() {
     Json::Value &serializedString = AsObject::serialized();
-    Json::Value property = serializedString.get("property", "");
     serializedString.removeMember("property");
-    serializedString.append(property);
-    return AsObject::serialized();
+    for (int propertyId: m_properties.keys()) {
+        Variant var = m_properties.value(propertyId);
+        if (!var.value) {
+            continue;
+        }
+        if (!isPropertyNeededSerialized(propertyId)) {
+            continue;
+        }
+        if (var.isSimpleType()) {
+            QString propertyName = asGetPropertyNameById(propertyId);
+            if (propertyName != "")
+                var.simpleSerializer(serializedString, asGetPropertyNameById(propertyId));
+
+        } else {
+            Json::Value content;
+            content << m_properties.value(propertyId);
+            QString propertyName = asGetPropertyNameById(propertyId);
+            if (propertyName != "")
+                serializedString[asGetPropertyNameById(propertyId).toStdString()] = content;
+        }
+    }
+    return serializedString;
 }
