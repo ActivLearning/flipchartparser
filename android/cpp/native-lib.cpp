@@ -39,10 +39,15 @@ jint JAVA(newInstance)(JNIEnv *env, jobject obj) {
     }
     return m_pFlipchartManager->newInstance();
 }
-
+void JAVA(disposed)(JNIEnv *env, jobject obj, jint handle) {
+    if (!m_pFlipchartManager || handle == -1) {
+        return;
+    }
+    m_pFlipchartManager->disposed(handle);
+}
 jstring JAVA(openFlipchart)(JNIEnv *env, jobject obj, jint handle,
                             jstring flipChartPath) {
-    if (!m_pFlipchartManager) {
+    if (!m_pFlipchartManager || handle == -1) {
         return env->NewStringUTF(kComponentNoInitial.data());
     }
 
@@ -56,7 +61,7 @@ jstring JAVA(openFlipchart)(JNIEnv *env, jobject obj, jint handle,
 
 jstring JAVA(loadPage)(JNIEnv *env, jobject obj, jint handle,
                        jint pageNumber) {
-    if (!m_pFlipchartManager) {
+    if (!m_pFlipchartManager || handle == -1) {
         return env->NewStringUTF(kComponentNoInitial.data());
     }
     jint val = 100;

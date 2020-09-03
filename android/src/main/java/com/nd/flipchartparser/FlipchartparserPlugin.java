@@ -23,6 +23,7 @@ public class FlipchartparserPlugin implements MethodCallHandler {
   public native boolean config(String tempPath,boolean logEnabled);
   public native String loadPage(int handle,int pageNumber);
   public native int newInstance();
+  public native void disposed(int handle);
   public native String openFlipchart(int handle,String flipchartPath);
 
 
@@ -67,7 +68,9 @@ public class FlipchartparserPlugin implements MethodCallHandler {
       result.success(str);
     } else if(call.method.equals("clear")){
       result.success(null);
-    } else if(call.method.equals("dispose")){
+    } else if(call.method.equals("disposed")){
+      int handle = call.argument("handle");
+      disposed(handle);
       result.success(null);
     } else if(call.method.equals("config")){
       String tempPath = call.argument("tempPath");

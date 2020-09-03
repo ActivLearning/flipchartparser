@@ -34,4 +34,10 @@ class FlipchartParser {
         <String, dynamic>{'handle': _handle, 'pageNumber': pageNumber});
     return result;
   }
+
+  Future<void> disposed() async {
+    await init();
+    await _channel
+        .invokeMethod('disposed', <String, dynamic>{'handle': _handle});
+  }
 }
