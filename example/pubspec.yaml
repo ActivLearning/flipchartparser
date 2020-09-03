@@ -20,6 +20,9 @@ dev_dependencies:
   flipchartparser:
     path: ../
 
+  file_picker: ^1.13.3
+  lite_log: ^0.1.0
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

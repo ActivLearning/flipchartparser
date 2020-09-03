@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 
 const MethodChannel _channel = const MethodChannel('flipchartparser');
-Future<void> config(String tempPath, bool logEnabled) async {
+Future<void> config({String tempPath, bool logEnabled = false}) async {
   await _channel.invokeMethod("config",
       <String, dynamic>{'tempPath': tempPath, 'logEnabled': logEnabled});
 }

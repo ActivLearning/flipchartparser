@@ -1,7 +1,11 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
+import 'package:flipchartparser/flipchartparser.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:lite_log/lite_log.dart';
 
 void main() => runApp(MyApp());
 
@@ -47,7 +51,16 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+          child: IconButton(
+              icon: Icon(Icons.open_in_browser),
+              onPressed: () async {
+                config(tempPath: Directory.systemTemp.path);
+                File file = await FilePicker.getFile();
+                FlipchartParser parser = new FlipchartParser();
+                LogUtil.i(content: await parser.openFlipchart(file.path));
+                String content = await parser.loadPage(0);
+                print(content);
+              }),
         ),
       ),
     );
