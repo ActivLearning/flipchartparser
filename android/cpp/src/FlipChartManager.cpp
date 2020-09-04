@@ -6,7 +6,7 @@
 #include "FlipChartController.h"
 
 FlipChartManager::~FlipChartManager() {
-
+    disposedAll();
 }
 
 FlipChartManager::FlipChartControllerHandle FlipChartManager::newInstance() {
